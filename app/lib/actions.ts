@@ -68,7 +68,7 @@ export async function deleteInvoice(id: string) {
         await sql`DELETE FROM invoices WHERE id = ${id}`;
         
     } catch(e){
-        consol.log(e)
+        console.log(e)
     }
 
     revalidatePath('/dashboard/invoices');
