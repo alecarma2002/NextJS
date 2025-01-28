@@ -190,8 +190,9 @@ export async function addUser(
         `;
     } catch (error) {
       if (error) return 'Invalid credentials.';
-      }
+      
       throw error;
-    });
+    }
+  });
   
 }
