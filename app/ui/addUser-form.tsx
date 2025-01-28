@@ -13,7 +13,7 @@ import { addUser } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 
 export default function addUserForm() {
-  const [errorMessage, formAction, isPending] = useActionState(
+  const [errorMessage, formAction] = useActionState(
     addUser,
     undefined,
   );
