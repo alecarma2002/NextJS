@@ -22,7 +22,7 @@ export default async function Page(props: {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchCustomersPages(query);
-  const customers = await fetchCustomers();
+  const customers = await fetchFilteredCustomers();
 
   return (
     <div className="w-full">
