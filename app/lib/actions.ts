@@ -150,7 +150,7 @@ const addUserFormSchema = z.object({
     invalid_type_error: 'Please select add your name.',
   }),
   email: z.string().email({
-    invalid_type_error: 'Please select use a valid email.',
+    message: 'Please select use a valid email.',
   }),
   password: z.string({
     invalid_type_error: 'Please select a valid password.',
