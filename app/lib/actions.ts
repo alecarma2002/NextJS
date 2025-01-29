@@ -191,6 +191,7 @@ export async function addUser(
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields.',
     };
+    console.error(validatedFields.error.flatten().fieldErrors)
   }
   
   bcrypt.hash(validatedFields.data.password, 10, async function(err, hash) {
@@ -199,9 +200,10 @@ export async function addUser(
           INSERT INTO users (name, email, password)
           VALUES (${validatedFields.data.name}, ${validatedFields.data.email}, ${hash})
         `;
+        console.log(`New user added ${validatedFields.data.name}, ${validatedFields.data.email}`)
     } catch (error) {
       if (error) return 'Invalid credentials.';
-      
+      console.error(error)
       throw error;
     }
   });
