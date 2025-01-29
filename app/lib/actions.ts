@@ -187,11 +187,13 @@ export async function addUser(
  
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
+    console.log("blablalbalba")
+    console.error(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields.',
     };
-    console.error(validatedFields.error.flatten().fieldErrors)
+    
   }
   
   bcrypt.hash(validatedFields.data.password, 10, async function(err, hash) {
