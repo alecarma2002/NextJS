@@ -35,13 +35,13 @@ export default async function InvoicesTable({
                       />
                       <p>{fascicolo.name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{invoice.email}</p>
+                    <p className="text-sm text-gray-500">{fascicolo.email}</p>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                    <p>{fascicolo.name}</p>
+                    {fascicolo.name}
                     </p>
                     <p>{formatDateToLocal(fascicolo.date)}</p>
                   </div>
@@ -86,16 +86,16 @@ export default async function InvoicesTable({
                         className="rounded-full"
                         width={28}
                         height={28}
-                        alt={`${invoice.name}'s profile picture`}
+                        alt={`${fascicolo.name}'s profile picture`}
                       />
-                      <p>{invoice.name}</p>
+                      <p>{fascicolo.name}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {invoice.email}
+                    {fascicolo.email}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(fasciolo.type)}
+                    {fascicolo.type}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(fascicolo.date)}

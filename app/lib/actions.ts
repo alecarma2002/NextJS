@@ -39,8 +39,6 @@ export type State = {
 export async function createFascicolo(prevState: State, formData: FormData) {
     // Validate form using Zod
 
-    
-
     const validatedFields = CreateInvoice.safeParse({
       customerId: formData.get('customerId'),
       type: formData.get('type'),
@@ -62,7 +60,7 @@ export async function createFascicolo(prevState: State, formData: FormData) {
     // Insert data into the database
     try {
       await sql`
-        INSERT INTO fascicoli ("customer_Id", type, number, date)
+        INSERT INTO fascicoli ("customer_id", type, number, date)
         VALUES (${customerId}, ${type}, ${number}, ${date})
       `;
     } catch (error) {
@@ -86,8 +84,8 @@ export async function updateInvoice(
   ) {
     const validatedFields = UpdateInvoice.safeParse({
       customerId: formData.get('customerId'),
-      amount: formData.get('amount'),
-      status: formData.get('status'),
+      number: formData.get('number'),
+      type: formData.get('type'),
     });
    
     if (!validatedFields.success) {
@@ -97,15 +95,14 @@ export async function updateInvoice(
       };
     }
    
-    const { customerId, amount, status } = validatedFields.data;
-    const amountInCents = amount * 100;
+    const { customerId, number, type } = validatedFields.data;
    
     try {
-      // await sql`
-      //   UPDATE invoices
-      //   SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-      //   WHERE id = ${id}
-      // `;
+       await sql`
+         UPDATE fascicoli
+         SET customer_Id = ${customerId}, type = ${type}, number = ${number}
+         WHERE id = ${id}
+        `;
     } catch (error) {
       return { message: 'Database Error: Failed to Update Invoice.' };
     }
