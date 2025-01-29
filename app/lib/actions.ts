@@ -71,8 +71,8 @@ export async function createInvoice(prevState: State, formData: FormData) {
     }
    
     // Revalidate the cache for the invoices page and redirect the user.
-    revalidatePath('/dashboard/invoices');
-    redirect('/dashboard/invoices');
+    revalidatePath('/dashboard/fascicoli');
+    redirect('/dashboard/fascicoli');
 }
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
@@ -108,8 +108,8 @@ export async function updateInvoice(
       return { message: 'Database Error: Failed to Update Invoice.' };
     }
    
-    revalidatePath('/dashboard/invoices');
-    redirect('/dashboard/invoices');
+    revalidatePath('/dashboard/fascicoli');
+    redirect('/dashboard/fascicoli');
 }
 
 export async function deleteInvoice(id: string) {
@@ -120,7 +120,7 @@ export async function deleteInvoice(id: string) {
         console.log(e)
     }
 
-    revalidatePath('/dashboard/invoices');
+    revalidatePath('/dashboard/fascicoli');
 
 }
 
@@ -211,4 +211,63 @@ export async function addUser(
   });
   
   return prevState;
+};
+
+const CustomerFormSchema = z.object({
+  id: z.string(),
+  name: z.string({
+    invalid_type_error: 'Inserire un nome idoneo',
+  }),
+  email: z.string().email({
+      message: 'email invalida'
+    }),
+  date: z.string(),
+});
+
+const CreateCustomer = CustomerFormSchema.omit({ id: true, date: true });
+
+export type CustomerState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createCustomer(prevState: CustomerState, formData: FormData) {
+  // Validate form using Zod
+  const validatedFields = CreateCustomer.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+  });
+ 
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+  }
+ 
+  // Prepare data for insertion into the database
+  const { name, email } = validatedFields.data;
+  const date = new Date().toISOString().split('T')[0];
+  const image_url = '/customers/michael-novotny.png';
+ 
+  // Insert data into the database
+  try {
+    await sql`
+      INSERT INTO customers (name, email, image_url)
+      VALUES (${name}, ${email}, ${image_url})
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to Create Customer.',
+    };
+  }
+  return prevState;
+  // Revalidate the cache for the invoices page and redirect the user.
+  revalidatePath('/dashboard/customers');
+  redirect('/dashboard/customers');
 }
