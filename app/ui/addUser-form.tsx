@@ -11,13 +11,11 @@ import { Button } from './button';
 import { useActionState } from 'react';
 import { addUser } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
+import { UserState } from '@/app/lib/actions';
 
 export default function addUserForm() {
-  const [errorMessage, formAction] = useActionState(
-    addUser,
-    undefined,
-  );
-
+  const initialState: UserState = { message: null, errors: {} };
+  const [errorMessage, formAction, isPending] = useActionState(addUser,initialState);
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
@@ -112,10 +110,10 @@ export default function addUserForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
+          {(
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{}</p>
             </>
           )}
         </div>

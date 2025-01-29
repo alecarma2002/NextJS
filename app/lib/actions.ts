@@ -156,14 +156,25 @@ const addUserFormSchema = z.object({
     invalid_type_error: 'Please select a valid password.',
   }),
   confirmPassword: z.string({
-    invalid_type_error: 'Please select a valid password.',
-  }),
+    invalid_type_error: 'Invalid password',
+  })
   
 });
 const AddUser = addUserFormSchema.omit({ id: true });
 
+
+export type UserState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  };
+  message?: string | null;
+};
+
 export async function addUser(
-  prevState: string | undefined,
+  prevState: UserState,
   formData: FormData,
 ) {
   // Validate form using Zod
@@ -195,4 +206,5 @@ export async function addUser(
     }
   });
   
+  return prevState;
 }

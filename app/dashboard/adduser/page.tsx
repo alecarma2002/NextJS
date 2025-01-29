@@ -1,6 +1,5 @@
 import Logo from '@/app/ui/logo';
 import AddUserForm from '@/app/ui/addUser-form';
-import { Suspense } from 'react';
  
 export default function AddUserPage() {
   return (
@@ -11,9 +10,7 @@ export default function AddUserPage() {
             <Logo />
           </div>
         </div>
-        <Suspense>
           <AddUserForm />
-        </Suspense>
       </div>
     </main>
   );
