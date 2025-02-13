@@ -16,6 +16,7 @@ export default async function CustomersTable({
 }) {
 
   const customers = await fetchFilteredCustomers(query, currentPage);
+  console.log(customers)
 
   return (
     <div className="w-full">
@@ -48,18 +49,8 @@ export default async function CustomersTable({
                         </p>
                       </div>
                     </div>
-                    <div className="flex w-full items-center justify-between border-b py-5">
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Pending</p>
-                        <p className="font-medium">{customer.total_pending}</p>
-                      </div>
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Paid</p>
-                        <p className="font-medium">{customer.total_paid}</p>
-                      </div>
-                    </div>
                     <div className="pt-4 text-sm">
-                      <p>{customer.total_invoices} invoices</p>
+                      <p>{customer.total_fascicoli} Fascicoli</p>
                     </div>
                   </div>
                 ))}
@@ -98,7 +89,7 @@ export default async function CustomersTable({
                         {customer.email}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.total_invoices}
+                        {customer.total_fascicoli}
                       </td>
                     </tr>
                   ))}

@@ -60,7 +60,7 @@ export default async function InvoicesTable({
                   Cliente
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Email
+                  Numero fascicolo
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Tipologia
@@ -92,7 +92,7 @@ export default async function InvoicesTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {fascicolo.email}
+                    {fascicolo.number}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {fascicolo.type}

@@ -31,7 +31,7 @@ export default async function Page(props: {
         <h1 className={`${lusitana.className} text-2xl`}>Fascicoli</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Cerca cliente..." />
+        <Search placeholder="Cerca fascicolo..." />
         <CreateInvoice />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>

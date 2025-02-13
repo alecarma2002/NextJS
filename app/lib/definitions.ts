@@ -60,9 +60,7 @@ export type CustomersTableType = {
   name: string;
   email: string;
   image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
+  total_fascicoli: number;
 };
 
 export type FormattedCustomersTable = {
@@ -70,9 +68,7 @@ export type FormattedCustomersTable = {
   name: string;
   email: string;
   image_url: string;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
+  total_fascicoli: number;
 };
 
 export type CustomerField = {
@@ -80,9 +76,9 @@ export type CustomerField = {
   name: string;
 };
 
-export type InvoiceForm = {
+export type FascicoliForm = {
   id: string;
   customer_id: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  type: string;
+  number: number;
 };
