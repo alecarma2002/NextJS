@@ -18,7 +18,7 @@ const FormSchema = z.object({
     type: z.string({
       invalid_type_error: 'Inserire la tipologia per continuare.',
     }),
-    number: z.number({
+    number: z.string({
       invalid_type_error: 'Selezionare un numero valido.',
     }),
     date: z.string(),
@@ -42,7 +42,7 @@ export async function createFascicolo(prevState: State, formData: FormData) {
     const validatedFields = CreateInvoice.safeParse({
       customerId: formData.get('customerId'),
       type: formData.get('type'),
-      number: Number(formData.get('number')),
+      number: formData.get('number'),
     });
    
     // If form validation fails, return errors early. Otherwise, continue.
@@ -52,7 +52,6 @@ export async function createFascicolo(prevState: State, formData: FormData) {
         message: 'Impossibile creacre il fascicolo. Riprovare',
       };
     }
-    console.log(validatedFields.data)
     // Prepare data for insertion into the database
     const { customerId, type, number } = validatedFields.data;
     const date = new Date().toISOString().split('T')[0];
@@ -64,7 +63,13 @@ export async function createFascicolo(prevState: State, formData: FormData) {
         VALUES (${customerId}, ${type}, ${number}, ${date})
       `;
     } catch (error) {
-      console.log(error)// If a database error occurs, return a more specific error.
+      console.log(error.code)// If a database error occurs, return a more specific error.
+      if(error.code == "23505") return{
+        errors: {
+          number: ["Numero di fascicolo gia esistente"],
+        },
+        message:"Il numero del fascicolo è gia esistente",
+      }
       return {
         message: 'Database Error: Failed to Create Invoice.',
       };
@@ -104,7 +109,9 @@ export async function updateInvoice(
          WHERE id = ${id}
         `;
     } catch (error) {
-      return { message: 'Database Error: Failed to Update Invoice.' };
+      return { 
+        message: 'Database Error: Failed to Update Invoice.' 
+      };
     }
    
     revalidatePath('/dashboard/fascicoli');
@@ -186,7 +193,6 @@ export async function addUser(
  
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    console.log("blablalbalba")
     console.error(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -251,7 +257,7 @@ export async function createCustomer(prevState: CustomerState, formData: FormDat
   // Prepare data for insertion into the database
   const { name, email } = validatedFields.data;
   const date = new Date().toISOString().split('T')[0];
-  const image_url = '/customers/michael-novotny.png';
+  const image_url = '/customers/evil-rabbit.png';
  
   // Insert data into the database
   try {
