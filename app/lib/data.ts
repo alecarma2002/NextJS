@@ -135,7 +135,6 @@ export async function fetchInvoiceById(id: string) {
       FROM fascicoli
       WHERE fascicoli.id = ${id};
     `;
-    console.log(data.rows[0]);
     return data.rows[0];
   } catch (error) {
     console.error('Database Error:', error);
