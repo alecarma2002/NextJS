@@ -193,7 +193,6 @@ export async function addUser(
  
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    console.log("blablalbalba")
     console.error(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
