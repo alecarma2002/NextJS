@@ -258,7 +258,7 @@ export async function createCustomer(prevState: CustomerState, formData: FormDat
   // Prepare data for insertion into the database
   const { name, email } = validatedFields.data;
   const date = new Date().toISOString().split('T')[0];
-  const image_url = '/customers/michael-novotny.png';
+  const image_url = '/customers/evil-rabbit.png';
  
   // Insert data into the database
   try {
